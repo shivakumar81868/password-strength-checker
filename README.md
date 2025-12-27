@@ -1,28 +1,40 @@
-# 🔐 Password Strength Checker
+import re
 
-A Python-based application that checks the strength of a password using basic cyber security rules.
+def check_password_strength(password):
+    strength_points = 0
 
-## 🚀 Features
-- Checks password length
-- Validates uppercase and lowercase letters
-- Verifies numbers and special characters
-- Displays password strength as Weak, Medium, or Strong
+    # Length check
+    if len(password) >= 8:
+        strength_points += 1
 
-## 🛠 Technologies Used
-- Python
-- Regular Expressions (re module)
+    # Uppercase letter check
+    if re.search(r"[A-Z]", password):
+        strength_points += 1
 
-## 📂 Project Structure
-password-strength-checker/
-│
-├── password_strength_checker.py
-└── README.md
+    # Lowercase letter check
+    if re.search(r"[a-z]", password):
+        strength_points += 1
 
-## ▶️ How to Run
-1. Make sure Python is installed on your system
-2. Clone this repository or download the file
-3. Open terminal or command prompt
-4. Run the following command:
+    # Number check
+    if re.search(r"[0-9]", password):
+        strength_points += 1
 
-```bash
-python password_strength_checker.py
+    # Special character check
+    if re.search(r"[!@#$%^&*(),.?\":{}|<>]", password):
+        strength_points += 1
+
+    # Strength evaluation
+    if strength_points <= 2:
+        return "Weak Password"
+    elif strength_points == 3 or strength_points == 4:
+        return "Medium Password"
+    else:
+        return "Strong Password"
+
+
+if __name__ == "__main__":
+    print("=== Password Strength Checker ===")
+    user_password = input("Enter your password: ")
+    result = check_password_strength(user_password)
+    print("Password Strength:", result)
+
